@@ -175,6 +175,25 @@ async function syncQuotes() {
     saveQuotes(); // Save merged data to local storage
     displayQuotes(); // Update displayed quotes
     console.log('Data synced from server');
+    alert('Quotes synced with server!'); // Display message to user
+  } catch (error) {
+    console.error('Error syncing quotes:', error.message);
+  }
+}
+
+// Example conflict resolution UI/notification
+function notifyConflictResolved() {
+  alert('Conflicts resolved. Data is now up to date.');
+}
+
+// Function to sync quotes with the server
+async function syncQuotes() {
+  try {
+    const serverQuotes = await fetchQuotesFromServer();
+    mergeData(serverQuotes);
+    saveQuotes(); // Save merged data to local storage
+    displayQuotes(); // Update displayed quotes
+    console.log('Data synced from server');
   } catch (error) {
     console.error('Error syncing quotes:', error.message);
   }
