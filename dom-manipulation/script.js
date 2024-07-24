@@ -1,3 +1,4 @@
+// Define an array to store quotes
 let quotes = [];
 
 // Function to show a random quote
@@ -24,6 +25,7 @@ function addQuote() {
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
     showRandomQuote(); // Update displayed quote
+    updateCategoryFilter(category); // Update category filter options
   } else {
     alert('Please enter both a quote and a category.');
   }
@@ -42,15 +44,30 @@ function loadQuotes() {
   }
 }
 
-// Initialize the app
+// Function to update the category filter options
+function updateCategoryFilter(newCategory) {
+  const categoryFilter = document.getElementById('categoryFilter');
+  if (newCategory && !categoryFilter.querySelector(`option[value="${newCategory}"]`)) {
+    const option = document.createElement('option');
+    option.value = newCategory;
+    option.textContent = newCategory;
+    categoryFilter.appendChild(option);
+  }
+}
+
+// Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
+  // Load quotes from local storage
   loadQuotes();
+  
+  // Display a random quote initially
   showRandomQuote();
-
-  // Event listener for showing new quote
+  
+  // Event listener for the "Show New Quote" button
   document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-
-  // Event listener for adding a new quote
+  
+  // Event listener for the "Add Quote" button
   document.getElementById('addQuote').addEventListener('click', addQuote);
 });
+
 
