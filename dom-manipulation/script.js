@@ -149,6 +149,24 @@ async function updateQuotesOnServer(newQuote) {
     return null; // Return null on error
   }
 }
+// Function to merge server data with local data
+function mergeData(serverQuotes) {
+  serverQuotes.forEach(serverQuote => {
+    const existingQuoteIndex = quotes.findIndex(quote => quote.id === serverQuote.id);
+    if (existingQuoteIndex !== -1) {
+      // Update existing quote if server version is newer
+      if (serverQuote.updatedAt > quotes[existingQuoteIndex].updatedAt) {
+        quotes[existingQuoteIndex] = serverQuote;
+        // Notify user or handle conflict resolution
+        console.log(`Updated quote ${serverQuote.id} from server`);
+      }
+    } else {
+      // Add new quote from server
+      quotes.push(serverQuote);
+      console.log(`Added new quote ${serverQuote.id} from server`);
+    }
+  });
+}
 // Function to sync quotes with the server
 async function syncQuotes() {
   try {
