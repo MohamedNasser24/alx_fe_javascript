@@ -130,7 +130,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listener for the "Show New Quote" button
   document.getElementById('newQuote').addEventListener('click', showRandomQuote);
 });
-
+ fileReader.readAsText(event.target.files[0]);
+}
 // Initialize by loading quotes from local storage
 loadQuotes();
 
