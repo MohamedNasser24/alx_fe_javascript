@@ -1,5 +1,7 @@
 // Initialize quotes array
-let quotes = [];
+let quotes = [{ text: "Quote 1", author: "Author 1", category: "Inspiration" },
+  { text: "Quote 2", author: "Author 2", category: "Motivation" },
+  { text: "Quote 3", author: "Author 3", category: "Inspiration" }];
 // Function to save quotes to local storage
 function saveQuotes() {
   localStorage.setItem('quotes', JSON.stringify(quotes));
