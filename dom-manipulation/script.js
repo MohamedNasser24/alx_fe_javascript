@@ -120,6 +120,35 @@ async function fetchQuotesFromServer() {
     return []; // Return empty array on error
   }
 }
+// Simulate updating data on the server
+async function updateQuotesOnServer(newQuote) {
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify({
+        title: newQuote.text,
+        body: newQuote.author,
+        userId: 1 // Example user ID for JSONPlaceholder
+      })
+    });
+    if (!response.ok) {
+      throw new Error('Failed to add quote to server');
+    }
+    const data = await response.json();
+    return {
+      id: data.id,
+      text: newQuote.text,
+      author: newQuote.author,
+      updatedAt: new Date(data.updatedAt) // Assuming updatedAt field for last updated time
+    };
+  } catch (error) {
+    console.error('Error adding quote to server:', error.message);
+    return null; // Return null on error
+  }
+}
 // Function to export quotes to JSON file
 function exportToJsonFile() {
   const quotesJson = JSON.stringify(quotes, null, 2);
