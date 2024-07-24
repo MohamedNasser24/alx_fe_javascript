@@ -17,7 +17,18 @@ function showRandomQuote() {
     quoteDisplay.innerHTML = '<p>No quotes available</p>';
   }
 }
-
+// Function to populate categories in the dropdown filter
+function populateCategories() {
+  const categoryFilter = document.getElementById('categoryFilter');
+  const categories = ['all', ...new Set(quotes.map(quote => quote.category))];
+  categoryFilter.innerHTML = '';
+  categories.forEach(category => {
+    const option = document.createElement('option');
+    option.value = category;
+    option.textContent = category.charAt(0).toUpperCase() + category.slice(1); // Capitalize first letter
+    categoryFilter.appendChild(option);
+  });
+}
 // Function to add a new quote
 function addQuote(text, category) {
   if (text && category) {
