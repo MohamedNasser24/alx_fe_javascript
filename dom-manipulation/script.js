@@ -1,5 +1,9 @@
+// Initialize quotes array
 let quotes = [];
-
+// Function to save quotes to local storage
+function saveQuotes() {
+  localStorage.setItem('quotes', JSON.stringify(quotes));
+}
 // Function to show a random quote
 function showRandomQuote() {
   const quoteDisplay = document.getElementById('quoteDisplay');
