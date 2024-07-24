@@ -2,6 +2,8 @@
 let quotes = [{ text: "Quote 1", author: "Author 1", category: "Inspiration" },
   { text: "Quote 2", author: "Author 2", category: "Motivation" },
   { text: "Quote 3", author: "Author 3", category: "Inspiration" }];
+const apiUrl = 'https://jsonplaceholder.typicode.com/posts'; // Example API endpoint
+
 // Function to save quotes to local storage
 function saveQuotes() {
   localStorage.setItem('quotes', JSON.stringify(quotes));
@@ -96,6 +98,26 @@ function loadQuotes() {
   const storedQuotes = localStorage.getItem('quotes');
   if (storedQuotes) {
     quotes = JSON.parse(storedQuotes);
+  }
+}
+// Simulate fetching data from server
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch quotes from server');
+    }
+    const data = await response.json();
+    // Assume server returns an array of quotes
+    return data.map(item => ({
+      id: item.id,
+      text: item.title, // Assuming title as quote text
+      author: item.body, // Assuming body as quote author
+      updatedAt: new Date(item.updatedAt) // Assuming updatedAt field for last updated time
+    }));
+  } catch (error) {
+    console.error('Error fetching quotes from server:', error.message);
+    return []; // Return empty array on error
   }
 }
 // Function to export quotes to JSON file
