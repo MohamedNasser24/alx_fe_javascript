@@ -53,3 +53,4 @@ document.addEventListener('DOMContentLoaded', function() {
   // Event listener for adding a new quote
   document.getElementById('addQuote').addEventListener('click', addQuote);
 });
+
