@@ -41,7 +41,18 @@ function addQuote(text, category) {
     alert('Please enter both a quote and a category.');
   }
 }
-
+// Function to filter quotes based on selected category
+function filterQuotes() {
+  const selectedCategory = document.getElementById('categoryFilter').value;
+  let filteredQuotes;
+  if (selectedCategory === 'all') {
+    filteredQuotes = quotes;
+  } else {
+    filteredQuotes = quotes.filter(quote => quote.category === selectedCategory);
+  }
+  displayQuotes(filteredQuotes);
+  saveLastFilter(selectedCategory);
+}
 // Function to create and add a new quote form dynamically
 function createAddQuoteForm() {
   const formContainer = document.getElementById('formContainer');
