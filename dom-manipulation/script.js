@@ -239,7 +239,33 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 // Initialize by loading quotes from local storage
 loadQuotes();
+// Initialize by loading quotes from local storage
+loadQuotes();
 
+// Example function to add a new quote (you'll integrate this into your existing code)
+function addQuote(newQuote) {
+  updateQuotesOnServer(newQuote)
+    .then(serverQuote => {
+      if (serverQuote) {
+        quotes.push(serverQuote);
+        saveQuotes(); // Save to local storage after adding
+        displayQuotes(); // Update displayed quotes
+      } else {
+        console.error('Failed to add quote to server.');
+      }
+    })
+    .catch(error => {
+      console.error('Error adding quote:', error.message);
+    });
+}
+
+// Example usage:
+// Assume adding a new quote triggers this function:
+const newQuote = { text: "New Quote", author: "New Author", updatedAt: new Date() };
+addQuote(newQuote);
+
+// Periodically sync data from server every 5 minutes (adjust timing as needed)
+setInterval(syncQuotes, 300000); // Sync quotes every 5 minutes
 
 
 
