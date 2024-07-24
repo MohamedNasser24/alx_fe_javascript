@@ -74,7 +74,37 @@ function loadQuotes() {
     quotes = JSON.parse(storedQuotes);
   }
 }
+// Function to export quotes to JSON file
+function exportToJsonFile() {
+  const quotesJson = JSON.stringify(quotes, null, 2);
+  const blob = new Blob([quotesJson], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'quotes.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
+// Function to import quotes from JSON file
+function importFromJsonFile(event) {
+  const fileReader = new FileReader();
+  fileReader.onload = function(event) {
+    try {
+      const importedQuotes = JSON.parse(event.target.result);
+      if (!Array.isArray(importedQuotes)) {
+        throw new Error('Invalid JSON format');
+      }
+      quotes.push(...importedQuotes); // Add imported quotes to the existing array
+      saveQuotes(); // Save updated quotes to local storage
+      displayQuotes(); // Update displayed quotes
+      alert('Quotes imported successfully!');
+    } catch (error) {
+      alert('Error importing quotes: ' + error.message);
+    }
+  };
 // Function to update the category filter options
 function updateCategoryFilter(newCategory) {
   const categoryFilter = document.getElementById('categoryFilter');
