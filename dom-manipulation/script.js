@@ -24,7 +24,6 @@ function addQuote() {
     document.getElementById('newQuoteText').value = '';
     document.getElementById('newQuoteCategory').value = '';
     showRandomQuote(); // Update displayed quote
-    updateCategoryFilter(category); // Update category filter options
   } else {
     alert('Please enter both a quote and a category.');
   }
@@ -40,17 +39,6 @@ function loadQuotes() {
   const storedQuotes = localStorage.getItem('quotes');
   if (storedQuotes) {
     quotes = JSON.parse(storedQuotes);
-  }
-}
-
-// Function to update the category filter options
-function updateCategoryFilter(newCategory) {
-  const categoryFilter = document.getElementById('categoryFilter');
-  if (newCategory && !categoryFilter.querySelector(`option[value="${newCategory}"]`)) {
-    const option = document.createElement('option');
-    option.value = newCategory;
-    option.textContent = newCategory;
-    categoryFilter.appendChild(option);
   }
 }
 
