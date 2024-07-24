@@ -149,6 +149,18 @@ async function updateQuotesOnServer(newQuote) {
     return null; // Return null on error
   }
 }
+// Function to sync quotes with the server
+async function syncQuotes() {
+  try {
+    const serverQuotes = await fetchQuotesFromServer();
+    mergeData(serverQuotes);
+    saveQuotes(); // Save merged data to local storage
+    displayQuotes(); // Update displayed quotes
+    console.log('Data synced from server');
+  } catch (error) {
+    console.error('Error syncing quotes:', error.message);
+  }
+}
 // Function to export quotes to JSON file
 function exportToJsonFile() {
   const quotesJson = JSON.stringify(quotes, null, 2);
