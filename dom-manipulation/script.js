@@ -1,4 +1,3 @@
-// Define an array to store quotes
 let quotes = [];
 
 // Function to show a random quote
@@ -14,21 +13,49 @@ function showRandomQuote() {
 }
 
 // Function to add a new quote
-function addQuote() {
-  const text = document.getElementById('newQuoteText').value.trim();
-  const category = document.getElementById('newQuoteCategory').value.trim();
-  
+function addQuote(text, category) {
   if (text && category) {
     const newQuote = { text, category };
     quotes.push(newQuote);
     saveQuotes();
-    document.getElementById('newQuoteText').value = '';
-    document.getElementById('newQuoteCategory').value = '';
     showRandomQuote(); // Update displayed quote
     updateCategoryFilter(category); // Update category filter options
   } else {
     alert('Please enter both a quote and a category.');
   }
+}
+
+// Function to create and add a new quote form dynamically
+function createAddQuoteForm() {
+  const formContainer = document.getElementById('formContainer');
+  
+  const form = document.createElement('form');
+  
+  const quoteInput = document.createElement('input');
+  quoteInput.setAttribute('type', 'text');
+  quoteInput.setAttribute('placeholder', 'Enter a new quote');
+  quoteInput.setAttribute('id', 'newQuoteText');
+  form.appendChild(quoteInput);
+  
+  const categoryInput = document.createElement('input');
+  categoryInput.setAttribute('type', 'text');
+  categoryInput.setAttribute('placeholder', 'Enter quote category');
+  categoryInput.setAttribute('id', 'newQuoteCategory');
+  form.appendChild(categoryInput);
+  
+  const addButton = document.createElement('button');
+  addButton.textContent = 'Add Quote';
+  addButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    const text = quoteInput.value.trim();
+    const category = categoryInput.value.trim();
+    addQuote(text, category);
+    quoteInput.value = '';
+    categoryInput.value = '';
+  });
+  form.appendChild(addButton);
+  
+  formContainer.appendChild(form);
 }
 
 // Function to save quotes to local storage
@@ -63,11 +90,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Display a random quote initially
   showRandomQuote();
   
+  // Create add quote form
+  createAddQuoteForm();
+  
   // Event listener for the "Show New Quote" button
   document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-  
-  // Event listener for the "Add Quote" button
-  document.getElementById('addQuote').addEventListener('click', addQuote);
 });
+
 
 
